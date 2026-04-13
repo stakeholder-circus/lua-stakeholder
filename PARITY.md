@@ -2,11 +2,11 @@
 
 ## Role
 
-Canonical Rust source of truth and the only true public fork of giacomo-b/rust-stakeholder.
+Embeddable full-parity scaffold.
 
 ## Parity class
 
-- canonical-source
+- scaffold-target
 
 ## Method and Review Model
 
@@ -16,8 +16,8 @@ Canonical Rust source of truth and the only true public fork of giacomo-b/rust-s
 - Derived from giacomo-b/rust-stakeholder where applicable
 - Missing behavior must fail fast and be recorded explicitly in GAPS.md
 
-## Attribution model
+## Promotion prerequisites
 
-- Original upstream Rust history is preserved for language repos created from the Rust baseline.
-- New language-specific rewrite commits sit on top of the imported upstream history.
-- MIT licensing remains in place for fork-derived work.
+- Prove deterministic table ordering, full fixture parity, and no-delegation behavior in plain Lua 5.4.
+- Preserve deterministic normalized JSON and the shared CLI contract from stakeholder-core.
+- Keep provenance and attribution explicit as implementation depth is added.
