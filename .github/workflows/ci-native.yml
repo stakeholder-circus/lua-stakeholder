@@ -1,0 +1,28 @@
+name: ci-native
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4 liblua5.4-dev luarocks
+          sudo luarocks install luacheck
+          sudo luarocks install busted
+      - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          version: latest
+      - name: Validate scaffold surface
+        run: python3 scripts/validate_scaffold.py
+      - name: Check formatting
+        run: stylua --check bin lua spec
+      - name: Run luacheck
+        run: luacheck lua bin spec
+      - name: Run tests
+        run: busted

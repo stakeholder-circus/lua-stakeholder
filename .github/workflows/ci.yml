@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  scaffold:
+  docs-stability:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,3 +16,22 @@ jobs:
         with:
           python-version: "3.12"
       - run: python3 scripts/validate_scaffold.py
+      - name: Validate docs and stability surfaces
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          required = [
+              Path("README.md"),
+              Path("STATUS.md"),
+              Path("GAPS.md"),
+              Path("PARITY.md"),
+              Path("docs/toolchain.md"),
+              Path("docs/provenance.md"),
+              Path("docs/traceability/first-push-families.md"),
+              Path("flake.nix"),
+          ]
+          missing = [str(path) for path in required if not path.exists()]
+          if missing:
+              raise SystemExit("Missing required docs/stability files: " + ", ".join(missing))
+          PY

@@ -1,0 +1,35 @@
+name: docker-smoke
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  docker-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t lua-stakeholder .
+      - name: Smoke list-values
+        run: docker run --rm lua-stakeholder --list-values | grep '"rendererKey":"classic-six.code_analyzer"'
+      - name: Smoke dedicated classic-six families
+        run: |
+          docker run --rm lua-stakeholder --focus-family code_analyzer --output-format json --seed docker-code | grep '"family":"code_analyzer"'
+          docker run --rm lua-stakeholder --focus-family data_processing --output-format json --seed docker-data | grep '"family":"data_processing"'
+      - name: Smoke dedicated modern-core families
+        run: |
+          docker run --rm lua-stakeholder --focus-family agent_workflows --output-format json --seed docker-agent | grep '"family":"agent_workflows"'
+          docker run --rm lua-stakeholder --focus-family delivery_preview_ops --output-format json --seed docker-delivery | grep '"family":"delivery_preview_ops"'
+      - name: Check deterministic same-seed output
+        run: |
+          first=$(docker run --rm lua-stakeholder --focus-family platform_engineering --output-format json --seed same-seed)
+          second=$(docker run --rm lua-stakeholder --focus-family platform_engineering --output-format json --seed same-seed)
+          test "$first" = "$second"
+      - name: Verify experimental provider fail-fast
+        run: |
+          if docker run --rm lua-stakeholder --experimental-provider openai-compatible >/tmp/lua-exp.out 2>/tmp/lua-exp.err; then
+            echo "expected experimental provider fail-fast" >&2
+            exit 1
+          fi
+          grep 'experimental-provider is not implemented yet in lua-stakeholder' /tmp/lua-exp.err
