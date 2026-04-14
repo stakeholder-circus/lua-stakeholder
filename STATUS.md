@@ -2,21 +2,23 @@
 
 Last updated: 2026-04-09 16:30 CEST
 
-- Role: `scaffold-repo`
-- Parity class: `scaffold-target`
-- State: `scaffolded-locally-not-for-push`
-- Rewrite completeness: `12%`
-- Functionality completeness: `3%`
+- Role: `validated-wider-matrix-local-tranche`
+- Parity class: `publication-held`
+- State: `publication-held-local-tranche`
+- Rewrite completeness: `58%`
+- Functionality completeness: `54%`
 - Branch: `main`
 - Origin: `git@github.com:stakeholder-circus/lua-stakeholder.git`
 - Upstream: `https://github.com/giacomo-b/rust-stakeholder`
 
 ## Blockers
-- Scaffold-only; do not publish or push until minimally implemented.
-- flake.lock generation is pending until nix is available locally.
+- Publication is intentionally held until the wider batch is ready.
+- Live-provider runtime remains open in the eventual full-live-provider lane.
+- `flake.lock` has not yet been generated in this repo.
+- Docker-first validation will be used for runtime promotion.
 
 ## Next
-- Keep the governance scaffold local, then implement the repo only after it is promoted in the queue.
+- Keep the publication-held local tranche stable, then promote only when the wider batch is ready.
 
 ## Canonical references
 - [`stakeholder-core/docs/program/rewrite-status-matrix.md`](/Users/davidsupan/shareholder/stakeholder-core/docs/program/rewrite-status-matrix.md)

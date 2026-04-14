@@ -4,13 +4,12 @@
 # Lua Gaps
 
 ## Current explicit gaps
-- `lua-stakeholder.foundation-pending`: deterministic scheduler, CLI wiring, and runtime skeleton are not implemented yet.
-- `lua-stakeholder.classic-six-pending`: classic-six dedicated renderer depth is not implemented yet.
-- `lua-stakeholder.modern-core-pending`: modern-core dedicated renderer depth is not implemented yet.
-- `lua-stakeholder.post-modern-core-pending`: later packet families remain unimplemented.
-- `lua-stakeholder.traceability-rows-pending`: traceability rows will be added when real behavior is promoted from scaffold to implementation.
+- `lua-stakeholder.live-provider-runtime-pending`: the eventual full live-provider lane remains open and must fail fast until implemented.
+- `lua-stakeholder.post-modern-core-pending`: later packet families remain open in the publication-held wider program.
+- `lua-stakeholder.traceability-publication-pending`: this repo documents its current publication-held tranche in `docs/traceability/first-push-families.md`, but future runtime promotion will still need concrete source-level rows.
 - `lua-stakeholder.codeql-activation-pending`: CodeQL activation is deferred until the repo contains source-bearing implementation files in a supported language.
-- `lua-stakeholder.flake-lock-pending`: `flake.nix` is present, but `flake.lock` was not generated during scaffold bootstrap because `nix` is unavailable in the current local environment.
+- `lua-stakeholder.flake-lock-not-generated`: `nix` is installed locally, but `flake.lock` has not yet been generated in this repo.
+- `lua-stakeholder.docker-first-release-gate-pending`: Docker remains the portable release gate for the next runtime promotion step.
 
 ## Guardrail
-- Do not present this scaffold as an implementation-complete parity port.
+- Do not present this publication-held local tranche as implementation-complete live-provider parity.
