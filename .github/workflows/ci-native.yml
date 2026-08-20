@@ -4,24 +4,27 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   ci-native:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install Lua toolchain
         run: |
           sudo apt-get update
           sudo apt-get install -y lua5.4 liblua5.4-dev luarocks
           sudo luarocks install luacheck
           sudo luarocks install busted
-      - uses: JohnnyMorganz/stylua-action@v4
+      - uses: JohnnyMorganz/stylua-action@76fd70c03e6340ceaf673366712db9b20560b402 # v5.0.0
         with:
-          version: latest
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: '2.5.2'
+          args: --check bin lua spec
       - name: Validate scaffold surface
         run: python3 scripts/validate_scaffold.py
-      - name: Check formatting
-        run: stylua --check bin lua spec
       - name: Run luacheck
         run: luacheck lua bin spec
       - name: Run tests
