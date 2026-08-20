@@ -140,11 +140,35 @@ local function parse_args(argv)
 	return config, nil
 end
 
+local function xor32(left, right)
+	local result = 0
+	local bit = 1
+	for _ = 1, 32 do
+		if (left % 2) ~= (right % 2) then
+			result = result + bit
+		end
+		left = math.floor(left / 2)
+		right = math.floor(right / 2)
+		bit = bit * 2
+	end
+	return result
+end
+
+local function multiply32(left, right)
+	local left_low = left % 65536
+	local left_high = math.floor(left / 65536)
+	local right_low = right % 65536
+	local right_high = math.floor(right / 65536)
+	local low = left_low * right_low
+	local cross = ((left_high * right_low) + (left_low * right_high)) % 65536
+	return (low + (cross * 65536)) % 4294967296
+end
+
 local function stable_hash(value)
 	local hash = 2166136261
 	for index = 1, #value do
-		hash = (hash ~ value:byte(index)) & 0xffffffff
-		hash = (hash * 16777619) & 0xffffffff
+		hash = xor32(hash, value:byte(index))
+		hash = multiply32(hash, 16777619)
 	end
 	return hash
 end
