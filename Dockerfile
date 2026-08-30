@@ -1,4 +1,4 @@
-FROM alpine:3.21 AS build
+FROM alpine:3.24 AS build
 RUN apk add --no-cache lua5.4 lua5.4-dev luarocks build-base git
 RUN ln -sf /usr/bin/lua5.4 /usr/local/bin/lua && \
     ln -sf /usr/bin/luarocks-5.4 /usr/local/bin/luarocks && \
@@ -11,7 +11,7 @@ ENV LUA_PATH="/app/lua/?.lua;/app/lua/?/init.lua;;"
 RUN luacheck lua bin spec
 RUN busted
 
-FROM alpine:3.21 AS runtime
+FROM alpine:3.24 AS runtime
 RUN apk add --no-cache lua5.4 && ln -sf /usr/bin/lua5.4 /usr/local/bin/lua
 WORKDIR /app
 COPY --from=build /app/bin /app/bin
